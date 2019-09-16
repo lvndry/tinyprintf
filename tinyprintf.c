@@ -15,7 +15,19 @@ int intlen(int n)
          n /= 10;
      }
     return len;
- }
+}
+
+int tiny_strlen(const char *str)
+{
+    int len = 0;
+
+    while(str[len] != '\0')
+    {
+        len++;
+    }
+
+    return len;
+}
 
 void buffer_flush(char buffer[], unsigned int *size)
 {
@@ -67,35 +79,33 @@ int buffer_write_int(char buffer[], int n, unsigned *size)
     return 1;
 }
 
-int tiny_strlen(const char *str)
+int buffer_write_int_base(char buffer[], int n, int base, unsigned int *size)
 {
-    int len = 0;
-
-    while(str[len] != '\0')
-    {
-        len++;
-    }
-
-    return len;
-}
-
-char* tiny_itoa(int n, char *str)
-{
+    char *seba = "0123456789abcdef";
     int len = intlen(n);
-    int num;
-    int index = len;
 
-    if (n == 0) return "0";
-
-    while(n > 0)
-    {
-       num = n%10;
-       str[index-1] = num;
-       n /= 10;
-       index--;
+    if (n < 0) {
+        buffer_write(buffer, '-', size);
+        n = -n;
     }
 
-    return str;
+    if (n == 0)
+    {
+        buffer_write(buffer, '0', size);
+        return 1;
+    }
+
+
+    for (int i = len - 1; i >= 0; i--)
+    {
+       int num = n%base;
+       buffer[*(size)+i] = seba[num];
+       n /= base;
+    }
+
+    *size += len;
+
+    return 1;
 }
 
 int tinyprintf(const char *format, ...) {
@@ -140,6 +150,17 @@ int tinyprintf(const char *format, ...) {
                     uint = va_arg(ap, unsigned);
                     buffer_write_int(buffer, uint, &buffer_size);
                 break;
+                case 'o':
+                    uint = va_arg(ap, unsigned);
+                    buffer_write_int_base(buffer, uint, 8, &buffer_size);
+                break;
+                case 'x':
+                    uint = va_arg(ap, unsigned);
+                    buffer_write_int_base(buffer, uint, 16, &buffer_size);
+                break;
+                case '%':
+                    buffer_write(buffer, '%', &buffer_size);
+                break;
                 default:
                     buffer_write(buffer, '%', &buffer_size);
                     buffer_write(buffer, control, &buffer_size);
@@ -163,7 +184,7 @@ int tinyprintf(const char *format, ...) {
 
 int main(void)
 {
-    tinyprintf("Hello %s it'working fine! %d is a signed int and %u unsigned", "landry", -15, 2);
+    tinyprintf("Hello %s it'working fine! %o is a octal int and %x hexa", "landry", 30, 30);
 
     return 0;
 }
