@@ -5,21 +5,34 @@
 
 #define BUFFER_SIZE 128
 
-void flush_buffer(char buffer[], unsigned int *size)
+void buffer_flush(char buffer[], unsigned int *size)
 {
     if (buffer == NULL)
     {
         return;
     }
 
-    buffer[(*size)] = '\0';
+    buffer[*size] = '\0';
     fputs(buffer, stdout);
     *size = 0;
+}
+
+int buffer_write(char buffer[], char c, unsigned int *size)
+{
+    if(*size == BUFFER_SIZE)
+    {
+        buffer_flush(buffer, size);
+    }
+
+    buffer[*size] = c;
+    *size += 1;
+    return 1;
 }
 
 int tinyprintf(const char *format, ...) {
     va_list ap;
     char *string = NULL;
+    char letter;
     char buffer[BUFFER_SIZE];
     unsigned int buffer_size = 0;
     int output_len = 0;
@@ -30,7 +43,7 @@ int tinyprintf(const char *format, ...) {
     {
         if (*format == '%')
         {
-            flush_buffer(buffer, &buffer_size);
+            buffer_flush(buffer, &buffer_size);
 
             format++;
             char control = *format;
@@ -41,24 +54,27 @@ int tinyprintf(const char *format, ...) {
                     string = va_arg(ap, char *);
                     fputs(string, stdout);
                     break;
+                case 'c':
+                    letter = va_arg(ap, int);
+                    putchar(letter);
+                break;
                 default:
+                    buffer_write(buffer, '%', &buffer_size);
+                    buffer_write(buffer, control, &buffer_size);
                 break;
             }
         }
         else
         {
-            if (buffer_size == BUFFER_SIZE || *(format+1) == '\0')
-            {
-                flush_buffer(buffer, &buffer_size);
-            }
-            buffer[buffer_size++] = *format;
+            buffer_write(buffer, *format, &buffer_size);
         }
         format++;
     }
 
-    putchar('\n');
-
     va_end(ap);
+
+    buffer_flush(buffer, &buffer_size);
+    putchar('\n');
 
     return output_len;
 }
