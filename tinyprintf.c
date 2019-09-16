@@ -5,7 +5,8 @@
 #include "utils.h"
 #include "buffer.h"
 
-int tinyprintf(const char *format, ...) {
+int tinyprintf(const char *format, ...)
+{
     va_list ap;
     char *string = NULL;
     char letter;
