@@ -184,7 +184,7 @@ int tinyprintf(const char *format, ...) {
 
 int main(void)
 {
-    tinyprintf("Hello %s it'working fine! %o is a octal int and %x hexa", "landry", 30, 30);
+    tinyprintf("Hello %s it'working fine! this char looks good: %c", "Landry", 'c');
 
     return 0;
 }
