@@ -51,7 +51,7 @@ int buffer_write_int(char buffer[], int n, unsigned *size)
 
     *size += len;
 
-    return 1;
+    return len;
 }
 
 int buffer_write_int_base(char buffer[], int n, int base, unsigned int *size)
@@ -80,5 +80,5 @@ int buffer_write_int_base(char buffer[], int n, int base, unsigned int *size)
 
     *size += len;
 
-    return 1;
+    return len;
 }
