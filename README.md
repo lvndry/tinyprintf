@@ -6,7 +6,6 @@ Protoype: `tinyprintf(const char *fmt, ...)`
 ## Usage
 ```
 make
-gcc -Wall -Werror -Wextra -pedantic -std=c99 -l:libprintf.a main.c
 ```
 
 ```c
