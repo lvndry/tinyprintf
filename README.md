@@ -1,7 +1,7 @@
 # Tinyprintf
 
 Minimal version of printf from `stdio.h`
-Protoype: `printf(const char *fmt, ...)`
+Protoype: `tinyprintf(const char *fmt, ...)`
 
 ## Usage
 ```
@@ -12,10 +12,10 @@ gcc -Wall -Werror -Wextra -pedantic -std=c99 -l:libprintf.a main.c
 ```c
 #include "tinyprintf.h"
 ...
-printf("Hello World"); // "Hello World"
-printf("Hey, C is %s!", "cool"); // "Hey C is cool"
-printf("%%"); // "%"
-printf("%x\n", 3405691582);  // "cafebabe"
+tinyprintf("Hello World"); // "Hello World"
+tinyprintf("Hey, C is %s!", "cool"); // "Hey C is cool"
+tinyprintf("%%"); // "%"
+tinyprintf("%x\n", 3405691582);  // "cafebabe"
 ```
 
 ## Possible wildcards

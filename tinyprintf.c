@@ -79,7 +79,6 @@ int tinyprintf(const char *format, ...)
     va_end(ap);
 
     buffer_flush(buffer, &buffer_size);
-    putchar('\n');
 
     return output_len;
 }
