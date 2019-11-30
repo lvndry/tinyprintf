@@ -7,9 +7,7 @@
 void buffer_flush(char buffer[], unsigned int *size)
 {
     if (buffer == NULL)
-    {
         return;
-    }
 
     buffer[*size] = '\0';
     fputs(buffer, stdout);
@@ -19,12 +17,11 @@ void buffer_flush(char buffer[], unsigned int *size)
 int buffer_write(char buffer[], char c, unsigned int *size)
 {
     if(*size == BUFFER_SIZE)
-    {
         buffer_flush(buffer, size);
-    }
 
     buffer[*size] = c;
     *size += 1;
+
     return 1;
 }
 
@@ -33,9 +30,7 @@ int buffer_write_int(char buffer[], int n, unsigned *size)
     int len = intlen(n);
 
     if ((*size + len) > BUFFER_SIZE)
-    {
         buffer_flush(buffer, size);
-    }
 
     if (n < 0)
     {

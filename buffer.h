@@ -10,7 +10,7 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  YOUR NAME (Landry Monga <landry.monga@epita.fr>), 
+ *         Author:  YOUR NAME (Landry Monga <lvndry@protonmail.com>), 
  *
  *
  * =====================================================================================
